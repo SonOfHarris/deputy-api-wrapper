@@ -539,10 +539,11 @@ class Wrapper extends Component
      */
     public function getCustomFieldByApiName($apiName)
     {
-        $customFieldsCollection = $this->getCustomFieldsCached();
-        $customFieldsMatching = array_filter($customFieldsCollection, function ($customField) use ($apiName) {
-            return ($customField->apiName == $apiName) ? true : false;
-        });
-        return array_pop($customFieldsMatching); // matching item or null
+        foreach ($this->getCustomFieldsCached() as $customField) {
+            if ($customField->apiName == $apiName) {
+                return $customField;
+            }
+        }
+        return null;
     }
 }
